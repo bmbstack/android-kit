@@ -1,0 +1,25 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationStyle</item>
+    </style>
+
+    <style name="ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlHighlight">#3fff</item>
+    </style>
+
+    <style name="ActionBarPopupThemeOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

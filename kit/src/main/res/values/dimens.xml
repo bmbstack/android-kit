@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_bar_height">46dp</dimen>
+    <dimen name="title_bar_out_padding">0dp</dimen>
+    <dimen name="title_bar_action_padding">16dp</dimen>
+    <dimen name="progress_bar_size">34dp</dimen>
+
+    <dimen name="dimen_15sp">15sp</dimen>
+</resources>

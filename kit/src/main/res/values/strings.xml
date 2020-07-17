@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">kit</string>
+    <string name="loading_view_isLoading">加载中&#8230;</string>
+    <string name="click_to_loadmore">点击加载更多</string>
+    <string name="fail_to_reload">重新加载</string>
+    <string name="no_more_items">没有更多</string>
+
+    <string name="empty_content">当前数据为空</string>
+    <string name="error_content">数据请求失败</string>
+    <string name="network_error">网络不可用，请检查网络设置</string>
+    <string name="network_error_click_reload">网络不可用，点击重试</string>
+    <string name="access_token_expired">登录状态已过期，请重新登录！</string>
+
+    <!-- status code -->
+    <string name="status_ok">OK</string> <!--一般不应该出现该信息-->
+    <string name="status_resource_not_found">服务器忙，请稍后再试！</string>
+    <string name="status_401_unauthorized">用户信息过期，需要重新登录！</string>
+    <string name="status_server_error">服务器错误！</string>
+    <string name="status_network_error">网络未连接</string>
+    <string name="status_parse_error">服务器忙，请稍后再试！</string>
+    <string name="status_network_timeout">网络不稳定，请稍候再试</string>
+    <string name="status_unknow_error">服务器忙，请稍后再试！</string>
+
+    <string name="login_cancel">取消</string>
+    <string name="authorize_succeed">授权成功！</string>
+</resources>
