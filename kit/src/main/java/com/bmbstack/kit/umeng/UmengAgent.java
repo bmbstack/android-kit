@@ -36,7 +36,12 @@ public class UmengAgent {
     public static int REQUEST_PERMISSION_CODE = 899;
     public static final String[] PERMISSION_LIST;
 
+    private enum ShareType {
+        IMAGE, MUSIC, VIDEO, LINK
+    }
+
     static {
+        // 如果需要使用QQ纯图分享或避免其它平台纯图分享的时候图片不被压缩，可以增加以下权限：
         if (Build.VERSION.SDK_INT >= 16) {
             PERMISSION_LIST = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         } else {
@@ -211,74 +216,84 @@ public class UmengAgent {
         });
     }
 
-    //============================分享============================================
-    public static void shareImage(boolean usePermission, Activity activity, final String uid,
-                                  String title, String desc, String thumbUrl,
-                                  String targetUrl, final ShareCallback callback) {
-        share(usePermission, 0, activity, uid, title, desc, thumbUrl, targetUrl, targetUrl, callback);
+    //============================分享(带面板)============================================
+    public static void shareImageWithPanel(boolean usePermission, Activity activity,
+                                           String title, String desc,
+                                           String mediaUrl, ShareCallback callback) {
+        shareWithPanel(usePermission, activity, ShareType.IMAGE, title, desc, "", mediaUrl, "", callback);
     }
 
-    public static void shareMusic(boolean usePermission, Activity activity, final String uid,
-                                  String title, String desc, String thumbUrl, String musicUrl,
-                                  String targetUrl, final ShareCallback callback) {
-        share(usePermission, 1, activity, uid, title, desc, thumbUrl, musicUrl, targetUrl, callback);
+    public static void shareMusicWithPanel(boolean usePermission, Activity activity,
+                                           String title, String desc,
+                                           String thumbUrl, String mediaUrl, String targetUrl,
+                                           ShareCallback callback) {
+        shareWithPanel(usePermission, activity, ShareType.MUSIC, title, desc, thumbUrl, mediaUrl, targetUrl, callback);
     }
 
-    public static void shareVideo(boolean usePermission, Activity activity, final String uid,
-                                  String title, String desc, String thumbUrl, String musicUrl,
-                                  String targetUrl, final ShareCallback callback) {
-        share(usePermission, 2, activity, uid, title, desc, thumbUrl, musicUrl, targetUrl, callback);
+    public static void shareVideoWithPanel(boolean usePermission, Activity activity,
+                                           String title, String desc,
+                                           String thumbUrl, String mediaUrl,
+                                           ShareCallback callback) {
+        shareWithPanel(usePermission, activity, ShareType.VIDEO, title, desc, thumbUrl, mediaUrl, "", callback);
     }
 
-    public static void shareLink(boolean usePermission, Activity activity, final String uid,
-                                 String title, String desc, String thumbUrl,
-                                 String targetUrl, final ShareCallback callback) {
-        share(usePermission, 3, activity, uid, title, desc, "", thumbUrl, targetUrl, callback);
+    public static void shareLinkWithPanel(boolean usePermission, Activity activity,
+                                          String title, String desc,
+                                          String thumbUrl, String mediaUrl,
+                                          ShareCallback callback) {
+        shareWithPanel(usePermission, activity, ShareType.LINK, title, desc, thumbUrl, mediaUrl, "", callback);
+    }
+
+    //============================分享(不带面板)============================================
+    public static void shareImage(boolean usePermission, Activity activity, SHARE_MEDIA platform,
+                                  String title, String desc,
+                                  String mediaUrl, ShareCallback callback) {
+        share(usePermission, activity, platform, ShareType.IMAGE, title, desc, "", mediaUrl, "", callback);
+    }
+
+    public static void shareMusic(boolean usePermission, Activity activity, SHARE_MEDIA platform,
+                                  String title, String desc,
+                                  String thumbUrl, String mediaUrl, String targetUrl,
+                                  ShareCallback callback) {
+        share(usePermission, activity, platform, ShareType.MUSIC, title, desc, thumbUrl, mediaUrl, targetUrl, callback);
+    }
+
+    public static void shareVideo(boolean usePermission, Activity activity, SHARE_MEDIA platform,
+                                  String title, String desc,
+                                  String thumbUrl, String mediaUrl,
+                                  ShareCallback callback) {
+        share(usePermission, activity, platform, ShareType.VIDEO, title, desc, thumbUrl, mediaUrl, "", callback);
+    }
+
+    public static void shareLink(boolean usePermission, Activity activity, SHARE_MEDIA platform,
+                                 String title, String desc,
+                                 String thumbUrl, String mediaUrl,
+                                 ShareCallback callback) {
+        share(usePermission, activity, platform, ShareType.LINK, title, desc, thumbUrl, mediaUrl, "", callback);
     }
 
     /**
-     * 自带分享的统计,其中uid是app本身的账户系统的id
+     * 分享(带面板),其中uid是app本身的账户系统的id
      *
-     * @param type      类型
-     * @param activity  activity实例
-     * @param uid       user id
-     * @param title     标题
-     * @param desc      描述
-     * @param thumbUrl  缩路图url
-     * @param mediaUrl  媒体url
-     * @param targetUrl 地址
-     * @param callback  回调
+     * @param usePermission 使用权限
+     * @param type          类型
+     * @param activity      activity实例
+     * @param title         标题
+     * @param desc          描述
+     * @param thumbUrl      缩路图url
+     * @param mediaUrl      媒体url
+     * @param targetUrl     地址
+     * @param callback      回调
      */
-    private static void share(boolean usePermission, int type, Activity activity, final String uid,
-                              String title, String desc, String thumbUrl, String mediaUrl,
-                              String targetUrl, final ShareCallback callback) {
+    private static void shareWithPanel(boolean usePermission, Activity activity, ShareType type,
+                                       String title, String desc,
+                                       String thumbUrl, String mediaUrl, String targetUrl,
+                                       ShareCallback callback) {
         if (usePermission && !checkPermissions(activity)) {
             return;
         }
-        ShareAction action = new ShareAction(activity);
-        if (type == 0) { // image
-            action.withMedia(new UMImage(activity, mediaUrl));
-        } else if (type == 1) { // music
-            UMusic music = new UMusic(mediaUrl);
-            music.setTitle(title);//音乐的标题
-            music.setThumb(new UMImage(activity, thumbUrl));//音乐的缩略图
-            music.setDescription(desc);//音乐的描述
-            music.setmTargetUrl(targetUrl);
-            action.withMedia(music);
-        } else if (type == 2) { // video
-            UMVideo video = new UMVideo(mediaUrl);
-            video.setTitle(title);//音乐的标题
-            video.setThumb(new UMImage(activity, thumbUrl));//音乐的缩略图
-            video.setDescription(desc);//音乐的描述
-            action.withMedia(video);
-        } else if (type == 3) { // link
-            UMWeb web = new UMWeb(mediaUrl);
-            web.setTitle(title);
-            UMImage img = new UMImage(activity, thumbUrl);
-            web.setThumb(img);
-            web.setDescription(desc);
-            action.withMedia(web);
-        }
+
+        ShareAction action = createAction(activity, type, title, desc, thumbUrl, mediaUrl, targetUrl);
         action.withText(desc)
                 .setDisplayList(shareMedias)
                 .setCallback(new UMShareListener() {
@@ -301,7 +316,93 @@ public class UmengAgent {
                     public void onCancel(SHARE_MEDIA share_media) {
                         callback.onCancel(share_media);
                     }
-                })
-                .open();
+                }).open();
+    }
+
+    /**
+     * 分享(不带面板),其中uid是app本身的账户系统的id
+     *
+     * @param usePermission 使用权限
+     * @param type          类型
+     * @param activity      activity实例
+     * @param title         标题
+     * @param desc          描述
+     * @param thumbUrl      缩路图url
+     * @param mediaUrl      媒体url
+     * @param targetUrl     地址
+     * @param callback      回调
+     */
+    private static void share(boolean usePermission, Activity activity, SHARE_MEDIA platform, ShareType type,
+                              String title, String desc,
+                              String thumbUrl, String mediaUrl, String targetUrl,
+                              ShareCallback callback) {
+        if (usePermission && !checkPermissions(activity)) {
+            return;
+        }
+
+        ShareAction action = createAction(activity, type, title, desc, thumbUrl, mediaUrl, targetUrl);
+        action.withText(desc)
+                .setPlatform(platform)
+                .setCallback(new UMShareListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+                        callback.onStart(share_media);
+                    }
+
+                    @Override
+                    public void onResult(SHARE_MEDIA share_media) {
+                        callback.onResult(share_media);
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                        callback.onError(share_media, throwable);
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media) {
+                        callback.onCancel(share_media);
+                    }
+                }).share();
+    }
+
+    /**
+     * @param type      类型
+     * @param activity  activity实例
+     * @param title     标题
+     * @param desc      描述
+     * @param thumbUrl  缩路图url
+     * @param mediaUrl  媒体url
+     * @param targetUrl 地址
+     * @return
+     */
+    private static ShareAction createAction(Activity activity, ShareType type,
+                                            String title, String desc,
+                                            String thumbUrl, String mediaUrl, String targetUrl) {
+        ShareAction action = new ShareAction(activity);
+        if (type == ShareType.IMAGE) { // image
+            action.withMedia(new UMImage(activity, mediaUrl));
+        } else if (type == ShareType.MUSIC) { // music
+            UMusic music = new UMusic(mediaUrl);
+            music.setTitle(title);//音乐的标题
+            music.setThumb(new UMImage(activity, thumbUrl));//音乐的缩略图
+            music.setDescription(desc);//音乐的描述
+            music.setmTargetUrl(targetUrl);
+            action.withMedia(music);
+        } else if (type == ShareType.VIDEO) { // video
+            UMVideo video = new UMVideo(mediaUrl);
+            video.setTitle(title);//音乐的标题
+            video.setThumb(new UMImage(activity, thumbUrl));//音乐的缩略图
+            video.setDescription(desc);//音乐的描述
+            action.withMedia(video);
+        } else if (type == ShareType.LINK) { // link
+            UMWeb web = new UMWeb(mediaUrl);
+            web.setTitle(title);
+            UMImage img = new UMImage(activity, thumbUrl);
+            web.setThumb(img);
+            web.setDescription(desc);
+            action.withMedia(web);
+        }
+        return action;
     }
 }

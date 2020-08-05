@@ -8,10 +8,12 @@
             type="com.bmbstack.kit.app.OneEntity" />
     </data>
 
-    <Button
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="@color/btnBgColor"
+        android:gravity="center"
+        android:padding="10dp"
         android:text="@{data.value}"
         android:textColor="@color/btnTextColor"
         android:textStyle="bold" />

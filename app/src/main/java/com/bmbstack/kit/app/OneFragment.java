@@ -1,10 +1,13 @@
 package com.bmbstack.kit.app;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.bmbstack.kit.app.databinding.FragmentOneBinding;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +31,32 @@ public class OneFragment extends BaseFragment<FragmentOneBinding> {
         requireSmart().setEnableRefresh(true);
         requireSmart().setEnableLoadMore(true);
 
-        List<OneEntity> list = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            list.add(new OneEntity(String.valueOf(i + 1)));
-        }
-
         items.clear();
-        items.addAll(list);
+        items.addAll(createList(0));
+
+        requireSmart().setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                new Handler().postDelayed(() -> {
+                    refreshLayout.finishRefresh();
+                    refreshLayout.finishLoadMore();
+
+                    items.clear();
+                    items.addAll(createList(0));
+                }, 1500);
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                new Handler().postDelayed(() -> {
+                    refreshLayout.finishRefresh();
+                    refreshLayout.finishLoadMore();
+
+                    items.addAll(createList(items.size()));
+                }, 1500);
+            }
+        });
     }
 
     @Override
@@ -45,6 +67,14 @@ public class OneFragment extends BaseFragment<FragmentOneBinding> {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_one;
+    }
+
+    private List<OneEntity> createList(int from) {
+        List<OneEntity> list = new ArrayList<>();
+        for (int i = from; i < from + 40; i++) {
+            list.add(new OneEntity(String.valueOf(i + 1)));
+        }
+        return list;
     }
 
     //=================================================================================

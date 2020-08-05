@@ -13,7 +13,11 @@ import com.bmbstack.kit.umeng.AuthCallback;
 import com.bmbstack.kit.umeng.ShareCallback;
 import com.bmbstack.kit.umeng.UmengAgent;
 import com.bmbstack.kit.umeng.WeixinInfo;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
+import androidx.annotation.NonNull;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
     private static String TAG = MainActivity.class.getSimpleName();
@@ -26,14 +30,31 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
         mTitleBar.setTextColor(getColorValue(R.color.white));
         mTitleBar.setStatusBarLightMode(false);
 
-
         mLoadingLayout.showLoading();
-        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(() -> mLoadingLayout.showContent(), 1500);
+
+        mBinding.smart.setEnableRefresh(true);
+        mBinding.smart.setEnableLoadMore(true);
+        mBinding.smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+
             @Override
-            public void run() {
-                mLoadingLayout.showContent();
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                new Handler().postDelayed(() -> {
+                    refreshLayout.finishRefresh();
+                    refreshLayout.finishLoadMore();
+                    mLoadingLayout.showContent();
+                }, 1500);
             }
-        }, 2000);
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                new Handler().postDelayed(() -> {
+                    refreshLayout.finishRefresh();
+                    refreshLayout.finishLoadMore();
+                    mLoadingLayout.showContent();
+                }, 1500);
+            }
+        });
     }
 
     @Override
@@ -65,7 +86,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.text:
-                UmengAgent.shareImage(false, MainActivity.this, "uid", "title", "this is content", "https://gold.xitu.io/",
+                UmengAgent.shareImageWithPanel(false, MainActivity.this, "title", "this is content",
                         "http://static.codeceo.com/images/2015/02/34426f99991154e63015e9e0278638ee.jpg",
                         new ShareCallback() {
                             @Override
@@ -91,8 +112,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         });
                 break;
             case R.id.music:
-                UmengAgent.shareMusic(false, MainActivity.this, "uid", "风吹麦浪", "李健情歌小王子", "http://pic2.ooopic.com/11/45/78/11b1OOOPICc9.jpg",
-                        "http://static-dev.qxinli.com/audio/248_20170206_161304/MP3File.mp3", "https://www.baidu.com/",
+                UmengAgent.shareMusicWithPanel(false, MainActivity.this, "风吹麦浪", "李健情歌小王子",
+                        "http://pic2.ooopic.com/11/45/78/11b1OOOPICc9.jpg",
+                        "http://static-dev.qxinli.com/audio/248_20170206_161304/MP3File.mp3",
+                        "https://www.baidu.com/",
                         new ShareCallback() {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
@@ -117,9 +140,37 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                         });
                 break;
             case R.id.video:
-                UmengAgent.shareVideo(false, MainActivity.this, "uid", "劲爆视频", "给力女司机停车转坏八两奥迪", "http://static.codeceo.com/images/2015/02/34426f99991154e63015e9e0278638ee.jpg",
+                UmengAgent.shareVideoWithPanel(false, MainActivity.this, "劲爆视频", "给力女司机停车转坏八两奥迪",
+                        "http://static.codeceo.com/images/2015/02/34426f99991154e63015e9e0278638ee.jpg",
                         "http://v1.365yg.com/9fc5496a036e2fe82bf813d96fbedaaf/58a2d09f/video/m/220cce02e12c941430fa3f15a7d110f7bc0114320100001a607842bbc9/",
-                        "http://www.toutiao.com/a6386833685304312066/",
+                        new ShareCallback() {
+                            @Override
+                            public void onResult(SHARE_MEDIA share_media) {
+                                toast("success" + share_media.toString());
+                            }
+
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                toast("onError" + share_media.toString());
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media) {
+                                toast("onCancel" + share_media.toString());
+                            }
+
+                            @Override
+                            public void onStart(SHARE_MEDIA share_media) {
+
+                            }
+                        });
+
+
+                break;
+            case R.id.link:
+                UmengAgent.shareLinkWithPanel(false, MainActivity.this, "劲爆视频", "给力女司机停车转坏八两奥迪",
+                        "http://static.codeceo.com/images/2015/02/34426f99991154e63015e9e0278638ee.jpg",
+                        "http://v1.365yg.com/9fc5496a036e2fe82bf813d96fbedaaf/58a2d09f/video/m/220cce02e12c941430fa3f15a7d110f7bc0114320100001a607842bbc9/",
                         new ShareCallback() {
                             @Override
                             public void onResult(SHARE_MEDIA share_media) {
@@ -170,7 +221,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 break;
             case R.id.http_api:
                 break;
-            case R.id.button1:
+            case R.id.tv_1:
                 OneActivity.launch(this);
                 break;
         }
