@@ -9,18 +9,21 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
 import com.aries.ui.util.StatusBarUtil;
 import com.aries.ui.view.title.TitleBarView;
 import com.bmbstack.kit.R;
 import com.bmbstack.kit.databinding.LayoutBaseFloatBinding;
+import com.bmbstack.kit.databinding.LayoutBaseFloatSmartBinding;
 import com.bmbstack.kit.databinding.LayoutBaseNormalBinding;
-import com.bmbstack.kit.databinding.LayoutBaseScrollBinding;
 import com.bmbstack.kit.widget.LoadingLayout;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
     private static final String TAG = BaseFragment.class.getSimpleName();
@@ -29,6 +32,8 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
     protected TitleBarView mTitleBar;
     protected LoadingLayout mLoadingLayout;
 
+    @Nullable
+    private SmartRefreshLayout mSmart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,54 +50,66 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
         if (mode == TitleBarMode.GONE) {
             LayoutBaseNormalBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_base_normal, container, false);
             binding.titleBar.setVisibility(View.GONE);
-            binding.flContent.addView(mBinding.getRoot(), params);
+            binding.container.addView(mBinding.getRoot(), params);
 
             mTitleBar = binding.titleBar;
             rootView = binding.getRoot();
         } else if (mode == TitleBarMode.GONE_WITH_TOP) {
             LayoutBaseNormalBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_base_normal, container, false);
             binding.titleBar.setVisibility(View.GONE);
-            binding.flContent.addView(mBinding.getRoot(), params);
+            binding.container.addView(mBinding.getRoot(), params);
 
-            LinearLayout.LayoutParams contentParams = (LinearLayout.LayoutParams) binding.flContent.getLayoutParams();
+            LinearLayout.LayoutParams contentParams = (LinearLayout.LayoutParams) binding.container.getLayoutParams();
             contentParams.topMargin = StatusBarUtil.getStatusBarHeight();
-            binding.flContent.setLayoutParams(contentParams);
+            binding.container.setLayoutParams(contentParams);
 
             mTitleBar = binding.titleBar;
             rootView = binding.getRoot();
         } else if (mode == TitleBarMode.NORMAL) {
             LayoutBaseNormalBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_base_normal, container, false);
             binding.titleBar.setVisibility(View.VISIBLE);
-            binding.flContent.addView(mBinding.getRoot(), params);
+            binding.container.addView(mBinding.getRoot(), params);
 
             mTitleBar = binding.titleBar;
             rootView = binding.getRoot();
         } else if (mode == TitleBarMode.FLOAT) {
             LayoutBaseFloatBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_base_float, container, false);
             binding.titleBar.setVisibility(View.VISIBLE);
-            binding.flContent.addView(mBinding.getRoot(), params);
-
+            binding.container.addView(mBinding.getRoot(), params);
 
             binding.titleBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    LinearLayout.LayoutParams contentParams = (LinearLayout.LayoutParams) binding.flContent.getLayoutParams();
-                    contentParams.topMargin = binding.titleBar.getMeasuredHeight();
-                    binding.flContent.setLayoutParams(contentParams);
-                    binding.flContent.requestLayout();
-
                     binding.titleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    LinearLayout.LayoutParams contentParams = (LinearLayout.LayoutParams) binding.container.getLayoutParams();
+                    contentParams.topMargin = binding.titleBar.getMeasuredHeight();
+                    binding.container.setLayoutParams(contentParams);
+                    binding.container.requestLayout();
                 }
             });
 
             mTitleBar = binding.titleBar;
             rootView = binding.getRoot();
-        } else if (mode == TitleBarMode.SCROLL) {
-            LayoutBaseScrollBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_base_scroll, container, false);
+        } else if (mode == TitleBarMode.FLOAT_SMART) {
+            LayoutBaseFloatSmartBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_base_float_smart, container, false);
             binding.titleBar.setVisibility(View.VISIBLE);
-            binding.flContent.addView(mBinding.getRoot(), params);
+            binding.container.addView(mBinding.getRoot(), params);
+
+            binding.titleBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    binding.titleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    LinearLayout.LayoutParams contentParams = (LinearLayout.LayoutParams) binding.container.getLayoutParams();
+                    contentParams.topMargin = binding.titleBar.getMeasuredHeight();
+                    binding.container.setLayoutParams(contentParams);
+                    binding.container.requestLayout();
+                }
+            });
 
             mTitleBar = binding.titleBar;
+            mSmart = binding.smart;
             rootView = binding.getRoot();
         } else {
             throw new RuntimeException("Title bar mode is error");
@@ -121,6 +138,14 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
 
     protected void onRetry() {
 
+    }
+
+    @NonNull
+    public SmartRefreshLayout requireSmart() {
+        if (mSmart == null) {
+            throw new IllegalStateException(this.getClass().getSimpleName() + "'s TitleBarMode must be smart type.");
+        }
+        return mSmart;
     }
 
     @Override

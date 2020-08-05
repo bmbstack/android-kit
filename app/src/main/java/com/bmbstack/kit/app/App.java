@@ -2,9 +2,9 @@ package com.bmbstack.kit.app;
 
 import com.bmbstack.kit.umeng.UmengAgent;
 import com.bmbstack.kit.util.XUtils;
-import com.scwang.smartrefresh.header.MaterialHeader;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.MaterialHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;

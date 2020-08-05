@@ -10,24 +10,32 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <androidx.core.widget.NestedScrollView
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            app:srlEnableLoadMore="false"
+            app:srlEnableRefresh="false">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:fillViewport="true">
 
-                <FrameLayout
-                    android:id="@+id/container"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
-        </androidx.core.widget.NestedScrollView>
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
         <com.aries.ui.view.title.TitleBarView
             android:id="@+id/title_bar"

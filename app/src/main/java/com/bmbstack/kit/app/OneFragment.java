@@ -19,33 +19,27 @@ public class OneFragment extends BaseFragment<FragmentOneBinding> {
 
     @Override
     protected void initCreateView(ViewGroup container, Bundle savedInstanceState) {
-        mTitleBar.setBgColor(ColorUtils.setAlphaComponent(getColorValue(android.R.color.holo_blue_light), 0.92f));
+        mTitleBar.setBgColor(ColorUtils.setAlphaComponent(getColorValue(R.color.black), 0.8f));
         mTitleBar.setTextColor(getColorValue(R.color.white));
         mTitleBar.setStatusBarLightMode(false);
 
         mBinding.setData(this);
 
+        requireSmart().setEnableRefresh(true);
+        requireSmart().setEnableLoadMore(true);
+
         List<OneEntity> list = new ArrayList<>();
-        list.add(new OneEntity("1"));
-        list.add(new OneEntity("2"));
-        list.add(new OneEntity("3"));
-        list.add(new OneEntity("4"));
+        for (int i = 0; i < 20; i++) {
+            list.add(new OneEntity(String.valueOf(i + 1)));
+        }
 
         items.clear();
         items.addAll(list);
-
-//        mLoadingLayout.showLoading();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mLoadingLayout.showContent();
-//            }
-//        }, 2000);
     }
 
     @Override
     protected TitleBarMode getTitleBarMode() {
-        return TitleBarMode.FLOAT;
+        return TitleBarMode.FLOAT_SMART;
     }
 
     @Override

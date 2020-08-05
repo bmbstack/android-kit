@@ -14,25 +14,16 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/smart"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            app:srlEnableLoadMore="false"
-            app:srlEnableRefresh="true">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:horizontalSpace="@{0}"
-                app:itemBinding="@{data.itemBinding}"
-                app:items="@{data.items}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:verticalSpace="@{10}" />
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:horizontalSpace="@{0}"
+            app:itemBinding="@{data.itemBinding}"
+            app:items="@{data.items}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:verticalSpace="@{10}" />
     </RelativeLayout>
 </layout>

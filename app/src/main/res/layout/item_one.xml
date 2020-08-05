@@ -5,12 +5,14 @@
 
         <variable
             name="data"
-            type="com.bmbstack.kit.app.OneEntity"/>
+            type="com.bmbstack.kit.app.OneEntity" />
     </data>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="80dp"
+        android:background="@color/btnBgColor"
         android:text="@{data.value}"
-        />
+        android:textColor="@color/btnTextColor"
+        android:textStyle="bold" />
 </layout>

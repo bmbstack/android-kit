@@ -48,6 +48,16 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'jp.wasabeef:glide-transformations:4.0.0'
+
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+    api 'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+    api 'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+    api 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+    api 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+    api 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+    api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+
     api 'com.github.AriesHoo.UIWidget:widget-core:3.2.15'
     api 'com.github.AriesHoo.UIWidget:widget-alert:3.2.15'
     api 'com.github.AriesHoo.UIWidget:widget-collapsing:3.2.15'
@@ -55,8 +65,10 @@ dependencies {
     // 支付宝支付(已经包含utdid)
     // https://maven.aliyun.com/mvn/search
     implementation 'com.fly.aar:alipaySdk:15.6.2'
+
     // 友盟基础分析功能
     api 'com.umeng.umsdk:analytics:8.1.6'
+    //noinspection GradleDependency
     api 'com.umeng.umsdk:common:2.2.5'
     // 分享功能
     api 'com.umeng.umsdk:share-core:6.9.8'

@@ -16,12 +16,13 @@ import com.bmbstack.kit.umeng.WeixinInfo;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 public class MainActivity extends BaseActivity<ActivityMainBinding> {
+    private static String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTitleBar.setBgColor(ColorUtils.setAlphaComponent(getColorValue(android.R.color.holo_blue_light), 0.92f));
+        mTitleBar.setBgColor(ColorUtils.setAlphaComponent(getColorValue(R.color.black), 0.8f));
         mTitleBar.setTextColor(getColorValue(R.color.white));
         mTitleBar.setStatusBarLightMode(false);
 
@@ -147,7 +148,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
                 UmengAgent.loginByWeixin(MainActivity.this, new AuthCallback<WeixinInfo>() {
                     @Override
                     public void onComplete(int var2, WeixinInfo info) {
-                        Log.e("dd", info.toString());
+                        Log.e(TAG, info.toString());
 
                     }
 
