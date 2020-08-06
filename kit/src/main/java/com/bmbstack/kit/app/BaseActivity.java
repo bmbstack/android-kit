@@ -12,13 +12,10 @@ import com.aries.ui.view.title.TitleBarView;
 import com.blankj.utilcode.util.LogUtils;
 import com.bmbstack.kit.R;
 import com.bmbstack.kit.databinding.LayoutBaseFloatBinding;
-import com.bmbstack.kit.databinding.LayoutBaseFloatSmartBinding;
+import com.bmbstack.kit.databinding.LayoutBaseFloatWithTopBinding;
 import com.bmbstack.kit.databinding.LayoutBaseNormalBinding;
 import com.bmbstack.kit.widget.LoadingLayout;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -31,8 +28,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     protected LoadingLayout mLoadingLayout;
 
     private boolean useAnimation = true;
-    @Nullable
-    private SmartRefreshLayout mSmart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,21 +68,9 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
             binding.titleBar.setVisibility(View.VISIBLE);
             binding.container.addView(mBinding.getRoot(), params);
 
-            binding.titleBar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    LinearLayout.LayoutParams contentParams = (LinearLayout.LayoutParams) binding.container.getLayoutParams();
-                    contentParams.topMargin = binding.titleBar.getMeasuredHeight();
-                    binding.container.setLayoutParams(contentParams);
-                    binding.container.requestLayout();
-
-                    binding.titleBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-
             mTitleBar = binding.titleBar;
-        } else if (mode == TitleBarMode.FLOAT_SMART) {
-            LayoutBaseFloatSmartBinding binding = DataBindingUtil.setContentView(this, R.layout.layout_base_float_smart);
+        } else if (mode == TitleBarMode.FLOAT_WITH_TOP) {
+            LayoutBaseFloatWithTopBinding binding = DataBindingUtil.setContentView(this, R.layout.layout_base_float_with_top);
             binding.titleBar.setVisibility(View.VISIBLE);
             binding.container.addView(mBinding.getRoot(), params);
 
@@ -104,7 +87,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
             });
 
             mTitleBar = binding.titleBar;
-            mSmart = binding.smart;
         } else {
             throw new RuntimeException("Title bar mode is error");
         }
@@ -127,14 +109,6 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
 
     protected void onRetry() {
 
-    }
-
-    @NonNull
-    public SmartRefreshLayout requireSmart() {
-        if (mSmart == null) {
-            throw new IllegalStateException(this.getClass().getSimpleName() + "'s TitleBarMode must be smart type.");
-        }
-        return mSmart;
     }
 
     @Override

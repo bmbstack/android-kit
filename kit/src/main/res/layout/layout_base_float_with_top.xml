@@ -4,38 +4,29 @@
 
     <data></data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <com.scwang.smart.refresh.layout.SmartRefreshLayout
-            android:id="@+id/smart"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srlEnableLoadMore="false"
-            app:srlEnableRefresh="false">
+            android:fillViewport="true">
 
-            <androidx.core.widget.NestedScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fillViewport="true">
+                android:orientation="vertical">
 
-                <LinearLayout
+                <FrameLayout
+                    android:id="@+id/container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent" />
 
-                    <FrameLayout
-                        android:id="@+id/container"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
-        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <com.aries.ui.view.title.TitleBarView
             android:id="@+id/title_bar"
@@ -52,6 +43,5 @@
             app:title_titleMainTextColor="@color/black"
             app:title_titleMainTextFakeBold="true"
             app:title_titleMainTextSize="@dimen/dimen_15sp" />
-
-    </FrameLayout>
+    </RelativeLayout>
 </layout>

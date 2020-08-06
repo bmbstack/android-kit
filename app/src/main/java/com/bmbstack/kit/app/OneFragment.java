@@ -28,13 +28,13 @@ public class OneFragment extends BaseFragment<FragmentOneBinding> {
 
         mBinding.setData(this);
 
-        requireSmart().setEnableRefresh(true);
-        requireSmart().setEnableLoadMore(true);
+        mBinding.smart.setEnableRefresh(true);
+        mBinding.smart.setEnableLoadMore(true);
 
         items.clear();
         items.addAll(createList(0));
 
-        requireSmart().setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        mBinding.smart.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -61,7 +61,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding> {
 
     @Override
     protected TitleBarMode getTitleBarMode() {
-        return TitleBarMode.FLOAT_SMART;
+        return TitleBarMode.FLOAT;
     }
 
     @Override

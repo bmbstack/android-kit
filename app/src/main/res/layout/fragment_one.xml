@@ -9,22 +9,56 @@
             type="com.bmbstack.kit.app.OneFragment" />
     </data>
 
-    <RelativeLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        app:srlEnableLoadMore="false"
+        app:srlEnableNestedScrolling="true"
+        app:srlEnableRefresh="false">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:orientation="vertical"
-            android:padding="16dp"
-            app:horizontalSpace="@{0}"
-            app:itemBinding="@{data.itemBinding}"
-            app:items="@{data.items}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:verticalSpace="@{10}" />
-    </RelativeLayout>
+            android:layout_height="match_parent">
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:elevation="0dp"
+                app:layout_behavior=".AppBarLayoutBehavior">
+
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    app:statusBarScrim="@android:color/transparent">
+
+                    <View
+                        android:id="@+id/iv_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_centerInParent="true"
+                        android:background="@color/red" />
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:horizontalSpace="@{6}"
+                app:itemBinding="@{data.itemBinding}"
+                app:items="@{data.items}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:spanCount="2"
+                app:verticalSpace="@{8}" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </layout>

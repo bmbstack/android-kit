@@ -4,30 +4,16 @@
 
     <data></data>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true">
 
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <FrameLayout
-                    android:id="@+id/container"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent" />
 
         <com.aries.ui.view.title.TitleBarView
             android:id="@+id/title_bar"
@@ -45,5 +31,5 @@
             app:title_titleMainTextFakeBold="true"
             app:title_titleMainTextSize="@dimen/dimen_15sp" />
 
-    </FrameLayout>
+    </RelativeLayout>
 </layout>
