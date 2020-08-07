@@ -59,7 +59,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
 
     @Override
     protected TitleBarMode getTitleBarMode() {
-        return TitleBarMode.FLOAT_WITH_TOP;
+        return TitleBarMode.NORMAL;
     }
 
     @Override
