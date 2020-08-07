@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.aries.ui.util.StatusBarUtil;
 import com.aries.ui.view.title.TitleBarView;
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.bmbstack.kit.R;
 import com.bmbstack.kit.databinding.LayoutBaseFloatBinding;
@@ -16,6 +17,8 @@ import com.bmbstack.kit.databinding.LayoutBaseFloatWithTopBinding;
 import com.bmbstack.kit.databinding.LayoutBaseNormalBinding;
 import com.bmbstack.kit.widget.LoadingLayout;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -200,6 +203,14 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
 
     protected int getColorValue(int resId) {
         return getResources().getColor(resId);
+    }
+
+    protected int getAlphaColorValue(int resId, @FloatRange(from = 0, to = 1) float alpha) {
+        return ColorUtils.setAlphaComponent(getColorValue(resId), alpha);
+    }
+
+    protected int getAlphaColorValue(int resId, @IntRange(from = 0x0, to = 0xFF) int alpha) {
+        return ColorUtils.setAlphaComponent(getColorValue(resId), alpha);
     }
 
     protected boolean isValid() {
