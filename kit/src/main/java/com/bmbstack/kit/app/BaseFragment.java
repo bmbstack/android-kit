@@ -120,6 +120,7 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
             });
 
             mTitleBar = binding.titleBar;
+            mSmart = binding.smart;
             rootView = binding.getRoot();
         } else {
             throw new RuntimeException("Title bar mode is error");
