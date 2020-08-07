@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/smart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlEnableLoadMore="false"
+            app:srlEnableNestedScrolling="true"
+            app:srlEnableRefresh="false">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <com.aries.ui.view.title.TitleBarView
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@color/white"
+            android:visibility="visible"
+            app:title_actionPadding="@dimen/title_bar_action_padding"
+            app:title_actionTextColor="@color/black"
+            app:title_actionTint="@color/black"
+            app:title_outPadding="@dimen/title_bar_out_padding"
+            app:title_statusBarLightMode="true"
+            app:title_titleMainText="@string/app_name"
+            app:title_titleMainTextColor="@color/black"
+            app:title_titleMainTextFakeBold="true"
+            app:title_titleMainTextSize="@dimen/dimen_15sp" />
+    </RelativeLayout>
+</layout>
