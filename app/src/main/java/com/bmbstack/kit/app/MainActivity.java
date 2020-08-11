@@ -13,8 +13,8 @@ import com.bmbstack.kit.umeng.AuthCallback;
 import com.bmbstack.kit.umeng.ShareCallback;
 import com.bmbstack.kit.umeng.UmengAgent;
 import com.bmbstack.kit.umeng.WeixinInfo;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import androidx.annotation.NonNull;

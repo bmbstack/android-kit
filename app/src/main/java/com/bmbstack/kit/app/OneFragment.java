@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ColorUtils;
 import com.bmbstack.kit.app.databinding.FragmentOneBinding;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
