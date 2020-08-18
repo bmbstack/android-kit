@@ -1,6 +1,6 @@
 package com.bmbstack.kit.app;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,9 +11,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 public class OneActivity extends BaseActivity<ActivityOneBinding> {
 
-    public static void launch(Context context) {
-        Intent intent = new Intent(context, OneActivity.class);
-        context.startActivity(intent);
+    public static void launch(Activity activity) {
+        Intent intent = new Intent(activity, OneActivity.class);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class OneActivity extends BaseActivity<ActivityOneBinding> {
 
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, new OneFragment());
+        transaction.replace(R.id.content, new OneFragment());
         transaction.commit();
     }
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dragger_layout="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <com.bmbstack.kit.widget.dragger.DraggerView
+        android:id="@+id/dragger_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        dragger_layout:drag_limit="0.76"
+        dragger_layout:drag_position="top"
+        dragger_layout:drag_view_id="@+id/content"
+        dragger_layout:shadow_view_id="@+id/shadow_view">
+
+        <FrameLayout
+            android:id="@+id/shadow_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_80"
+            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Dragger"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+    </com.bmbstack.kit.widget.dragger.DraggerView>
+</layout>

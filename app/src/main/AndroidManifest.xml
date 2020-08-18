@@ -39,6 +39,11 @@
             android:name=".OneActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".TwoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeTranslucent" />
 
         <provider
             android:name="net.grandcentrix.tray.provider.TrayContentProvider"

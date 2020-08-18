@@ -224,6 +224,9 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> {
             case R.id.tv_1:
                 OneActivity.launch(this);
                 break;
+            case R.id.tv_2:
+                TwoActivity.launch(this);
+                break;
         }
     }
 
