@@ -102,9 +102,7 @@ public class DraggerView extends FrameLayout {
                 MeasureSpec.EXACTLY);
         if (dragView != null) {
             dragView.measure(measureWidth, measureHeight);
-            setViewAlpha(dragView, MIN_ALPHA);
-            closeActivity();
-            expandWithDelay();
+            dragView.setAlpha(MIN_ALPHA);
         }
     }
 
@@ -113,6 +111,9 @@ public class DraggerView extends FrameLayout {
         super.onSizeChanged(width, height, oldWidth, oldHeight);
         setVerticalDragRange(height);
         setHorizontalDragRange(width);
+
+        closeActivity();
+        expandWithDelay();
     }
 
     @Override
@@ -264,7 +265,7 @@ public class DraggerView extends FrameLayout {
     public void expandWithDelay() {
         handler.postDelayed(() -> {
             if (isEnabled()) {
-                setViewAlpha(dragView, MAX_ALPHA);
+                dragView.setAlpha(MAX_ALPHA);
                 shadowView.setVisibility(VISIBLE);
                 openActivity();
                 canFinish = true;
@@ -329,10 +330,6 @@ public class DraggerView extends FrameLayout {
         if (draggerCallback != null) {
             draggerCallback.notifyClose();
         }
-    }
-
-    private void setViewAlpha(View view, float alpha) {
-        view.setAlpha(alpha);
     }
 
     private boolean smoothSlideTo(View view, int x, int y) {
