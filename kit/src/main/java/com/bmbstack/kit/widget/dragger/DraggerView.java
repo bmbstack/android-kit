@@ -102,7 +102,6 @@ public class DraggerView extends FrameLayout {
                 MeasureSpec.EXACTLY);
         if (dragView != null) {
             dragView.measure(measureWidth, measureHeight);
-            dragView.setAlpha(MIN_ALPHA);
         }
     }
 
@@ -112,8 +111,11 @@ public class DraggerView extends FrameLayout {
         setVerticalDragRange(height);
         setHorizontalDragRange(width);
 
-        closeActivity();
-        expandWithDelay();
+        if (dragView != null) {
+            dragView.setAlpha(MIN_ALPHA);
+            closeActivity();
+            expandWithDelay();
+        }
     }
 
     @Override
