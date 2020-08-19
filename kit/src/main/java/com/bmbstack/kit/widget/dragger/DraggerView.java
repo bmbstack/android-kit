@@ -111,10 +111,12 @@ public class DraggerView extends FrameLayout {
         setVerticalDragRange(height);
         setHorizontalDragRange(width);
 
-        if (dragView != null && dragHelper != null && dragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE) {
-            dragView.setAlpha(MIN_ALPHA);
-            closeActivity();
-            expandWithDelay();
+        if (dragView != null && dragHelper != null) {
+            if (dragHelper.getViewDragState() == ViewDragHelper.STATE_IDLE) {
+                dragView.setAlpha(MIN_ALPHA);
+                closeActivity();
+                expandWithDelay();
+            }
         }
     }
 
