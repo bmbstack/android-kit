@@ -11,12 +11,12 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class CommonLoggingInterceptor implements Interceptor {
-    private static final String TAG = CommonLoggingInterceptor.class.getSimpleName();
+public class CommonHeaderInterceptor implements Interceptor {
+    private static final String TAG = "API";
 
     private HttpHeaders headers;
 
-    public CommonLoggingInterceptor(HttpHeaders headers) {
+    public CommonHeaderInterceptor(HttpHeaders headers) {
         this.headers = headers;
     }
 
@@ -25,7 +25,7 @@ public class CommonLoggingInterceptor implements Interceptor {
         Request.Builder builder = chain.request().newBuilder();
 
         Request request = builder.build();
-        LogUtils.dTag(TAG, headersToString(headers) + request.headers().toString());
+        LogUtils.iTag(TAG, headersToString(headers) + request.headers().toString());
         return chain.proceed(request);
     }
 
