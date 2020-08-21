@@ -22,7 +22,7 @@ public class TwoActivity extends BaseActivity<ActivityTwoBinding> {
     public static void launch(Activity activity) {
         Intent intent = new Intent(activity, TwoActivity.class);
         activity.startActivity(intent);
-        activity.overridePendingTransition(R.anim.slide_in_from_bottom_enter, R.anim.slide_in_from_bottom_exit);
+        activity.overridePendingTransition(R.anim.open_enter_from_bottom, R.anim.open_exit_to_bottom);
     }
 
     @Override

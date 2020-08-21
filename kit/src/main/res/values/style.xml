@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="WindowAnimationStyle" parent="android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_open_enter</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_open_exit</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_close_enter</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_close_exit</item>
+    <style name="WindowAnimationStyleHorizontal" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/open_enter_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/open_exit_to_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/close_enter_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/close_exit_to_right</item>
+    </style>
+
+    <style name="WindowAnimationStyleVertical" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/open_enter_from_bottom</item>
+        <item name="android:activityOpenExitAnimation">@anim/open_exit_to_bottom</item>
+        <item name="android:activityCloseEnterAnimation">@anim/close_enter_from_bottom</item>
+        <item name="android:activityCloseExitAnimation">@anim/close_exit_to_bottom</item>
+    </style>
+
+    <style name="WindowAnimationTranslucentStyleVertical" parent="@android:style/Animation.Translucent">
+        <item name="android:windowEnterAnimation">@anim/open_enter_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/close_exit_to_bottom</item>
     </style>
 </resources>

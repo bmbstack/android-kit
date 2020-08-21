@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppThemeHorizontal"
         tools:ignore="GoogleAppIndexingWarning">
 
         <!--在代码中写入AppKey和渠道-->
@@ -43,7 +43,7 @@
             android:name=".TwoActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTranslucentTheme" />
+            android:theme="@style/AppTranslucentThemeVertical" />
 
         <provider
             android:name="net.grandcentrix.tray.provider.TrayContentProvider"
