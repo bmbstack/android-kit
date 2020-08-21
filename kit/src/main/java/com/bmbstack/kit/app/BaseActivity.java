@@ -2,6 +2,7 @@ package com.bmbstack.kit.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -22,17 +23,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
 public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatActivity {
-    private static final String TAG = BaseActivity.class.getSimpleName();
+    private static final String TAG = "PageHook";
 
     protected V mBinding;
     protected TitleBarView mTitleBar;
     protected LoadingLayout mLoadingLayout;
 
-    private boolean useAnimation = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onCreate");
         mBinding = DataBindingUtil.inflate(getLayoutInflater(), getLayoutId(), null, false);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -91,48 +91,52 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
     protected abstract int getLayoutId();
 
     protected void onRetry() {
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onRetry");
+    }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onRestart");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onPause");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onStop");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-    }
-
-    protected void useAnimation(boolean useAnimation) {
-        this.useAnimation = useAnimation;
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onDestroy");
     }
 
     /**
-     * 兼容OPHONE
+     * 兼容OPhone
      */
     @Override
     public void startActivity(Intent intent) {
         try {
             super.startActivity(intent);
-            if (useAnimation) {
-                overridePendingTransition(R.anim.slide_open_enter, R.anim.slide_open_exit);
-            }
         } catch (Exception e) {
             LogUtils.eTag(TAG, "startActivity.error=" + e.toString());
             e.printStackTrace();
@@ -144,24 +148,13 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         }
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        if (useAnimation) {
-            overridePendingTransition(R.anim.slide_close_enter, R.anim.slide_close_exit);
-        }
-    }
-
     /**
-     * 兼容OPHONE
+     * 兼容OPhone
      */
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         try {
             super.startActivityForResult(intent, requestCode);
-            if (useAnimation) {
-                overridePendingTransition(R.anim.slide_open_enter, R.anim.slide_open_exit);
-            }
         } catch (Exception e) {
             LogUtils.eTag(TAG, "startActivity.error=" + e.toString());
             e.printStackTrace();

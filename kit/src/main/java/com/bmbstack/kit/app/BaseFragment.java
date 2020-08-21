@@ -1,7 +1,9 @@
 package com.bmbstack.kit.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +20,35 @@ import com.bmbstack.kit.widget.LoadingLayout;
 
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
-    private static final String TAG = BaseFragment.class.getSimpleName();
+    private static final String TAG = "PageHook";
 
     protected V mBinding;
     protected TitleBarView mTitleBar;
     protected LoadingLayout mLoadingLayout;
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onAttach");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onCreate");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onCreateView");
         mBinding = DataBindingUtil.inflate(inflater, getLayoutId(), null, false);
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -100,9 +117,66 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
     protected abstract int getLayoutId();
 
     protected void onRetry() {
-
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onRetry");
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onViewCreated");
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onActivityCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG, "[" + getClass().getCanonicalName() + "] onDetach");
+    }
+
+    /**
+     * 兼容OPhone
+     */
     @Override
     public void startActivity(Intent intent) {
         try {
@@ -116,6 +190,9 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
         }
     }
 
+    /**
+     * 兼容OPhone
+     */
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         try {
@@ -127,11 +204,6 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
                 activity.startActivityIfNeeded(intent, requestCode);
             }
         }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     protected int getColorValue(int resId) {
