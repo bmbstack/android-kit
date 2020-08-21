@@ -289,14 +289,21 @@ public class DraggerView extends FrameLayout {
             case RIGHT:
                 closeFromCenterToRight();
                 break;
+            case BOTTOM:
+                closeFromCenterToTop();
+                break;
             case TOP:
             default:
                 closeFromCenterToBottom();
                 break;
-            case BOTTOM:
-                closeFromCenterToTop();
-                break;
         }
+    }
+
+    public void closeActivityFriendly() {
+        if (shadowView != null) {
+            shadowView.setVisibility(View.INVISIBLE);
+        }
+        closeActivity();
     }
 
     public void moveToCenter() {
