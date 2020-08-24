@@ -1,6 +1,7 @@
 package com.bmbstack.kit.app;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,9 +17,12 @@ import com.bmbstack.kit.databinding.LayoutBaseFloatBinding;
 import com.bmbstack.kit.databinding.LayoutBaseNormalBinding;
 import com.bmbstack.kit.widget.LoadingLayout;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
@@ -174,8 +178,12 @@ public abstract class BaseActivity<V extends ViewDataBinding> extends AppCompatA
         return getResources().getColor(R.color.colorPrimaryDark);
     }
 
-    protected int getColorValue(int resId) {
+    protected int getColorValue(@ColorRes int resId) {
         return getResources().getColor(resId);
+    }
+
+    protected Drawable getDrawableValue(@DrawableRes int resId) {
+        return ResourcesCompat.getDrawable(getResources(), resId, getTheme());
     }
 
     protected int getAlphaColorValue(int resId, @FloatRange(from = 0, to = 1) float alpha) {

@@ -2,6 +2,7 @@ package com.bmbstack.kit.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,10 +19,12 @@ import com.bmbstack.kit.databinding.LayoutBaseFloatBinding;
 import com.bmbstack.kit.databinding.LayoutBaseNormalBinding;
 import com.bmbstack.kit.widget.LoadingLayout;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.FloatRange;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
@@ -208,6 +211,10 @@ public abstract class BaseFragment<V extends ViewDataBinding> extends Fragment {
 
     protected int getColorValue(int resId) {
         return getResources().getColor(resId);
+    }
+
+    protected Drawable getDrawableValue(@DrawableRes int resId) {
+        return ResourcesCompat.getDrawable(getResources(), resId, requireActivity().getTheme());
     }
 
     protected int getAlphaColorValue(int resId, @FloatRange(from = 0, to = 1) float alpha) {
