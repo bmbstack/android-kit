@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.internal.ThemeEnforcement;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
@@ -67,10 +67,10 @@ public class BottomNavigationViewInner extends BottomNavigationView {
         TintTypedArray a = ThemeEnforcement.obtainTintedStyledAttributes(context, attrs,
                 com.google.android.material.R.styleable.BottomNavigationView,
                 defStyleAttr, com.google.android.material.R.style.Widget_Design_BottomNavigationView,
-                new int[]{com.google.android.material.R.styleable.BottomNavigationView_itemTextAppearanceInactive,
-                        com.google.android.material.R.styleable.BottomNavigationView_itemTextAppearanceActive});
+                new int[]{com.google.android.material.R.styleable.NavigationBarView_itemTextAppearanceInactive,
+                        com.google.android.material.R.styleable.NavigationBarView_itemTextAppearanceActive});
         // clear if you don't have set item icon tint list
-        if (!a.hasValue(com.google.android.material.R.styleable.BottomNavigationView_itemIconTint)) {
+        if (!a.hasValue(com.google.android.material.R.styleable.NavigationBarView_itemIconTint)) {
             clearIconTintColor();
         }
         a.recycle();
@@ -322,7 +322,7 @@ public class BottomNavigationViewInner extends BottomNavigationView {
 //        setField(mMenuView.getClass(), mMenuView, "isShifting", enable);
 //        mMenuView.updateMenuView();
 
-        setLabelVisibilityMode(enable ? LabelVisibilityMode.LABEL_VISIBILITY_SELECTED : LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+        setLabelVisibilityMode(enable ? NavigationBarView.LABEL_VISIBILITY_SELECTED : NavigationBarView.LABEL_VISIBILITY_LABELED);
         return this;
     }
 
