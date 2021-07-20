@@ -55,7 +55,7 @@ dependencies {
     api 'com.github.AriesHoo.UIWidget:widget-collapsing:3.2.15'
 
     // 支付宝支付(不包含utdid)
-    implementation project(path: ':alipay')
+    implementation 'com.github.bmbstack:android-alipay-noutdid:15.8.3'
 
     // 友盟基础分析功能
     api 'com.umeng.umsdk:common:9.4.0'
